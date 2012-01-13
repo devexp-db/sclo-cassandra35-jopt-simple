@@ -29,7 +29,7 @@
 #
 Name: jopt-simple
 Version: 3.3
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: A Java command line parser
 License: MIT
 Group: Development/Libraries
@@ -89,6 +89,9 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.3-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Thu Aug 11 2011 Karel Klíč <kklic@redhat.com> - 3.3-3
 - Include the license text in the javadoc package, which is
   independent from the main package

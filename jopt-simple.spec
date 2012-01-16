@@ -29,7 +29,7 @@
 #
 Name: jopt-simple
 Version: 3.3
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: A Java command line parser
 License: MIT
 Group: Development/Libraries
@@ -40,7 +40,8 @@ Patch0: jopt-simple-buildfixes.patch
 BuildArch: noarch
 BuildRequires: jpackage-utils
 BuildRequires: java-devel >= 1.5.0
-BuildRequires: maven, maven-scm
+BuildRequires: maven maven-scm
+BuildRequires: maven-enforcer-plugin maven-dependency-plugin
 Requires: java >= 0:1.5.0
 Requires: jpackage-utils
 # Unit testing is disabled due to missing dependencies.
@@ -89,6 +90,11 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jan 16 2012 Karel Klíč <kklic@redhat.com> - 3.3-5
+- Added maven-enforcer-plugin and maven-dependency-plugin as build
+  requires to fix the build process (although not sure why that is
+  neccessary)
+
 * Fri Jan 13 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.3-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 

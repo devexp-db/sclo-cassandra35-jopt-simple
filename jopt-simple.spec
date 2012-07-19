@@ -29,7 +29,7 @@
 #
 Name: jopt-simple
 Version: 3.3
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: A Java command line parser
 License: MIT
 Group: Development/Libraries
@@ -90,6 +90,9 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Jul 19 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.3-6
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
+
 * Mon Jan 16 2012 Karel Klíč <kklic@redhat.com> - 3.3-5
 - Added maven-enforcer-plugin and maven-dependency-plugin as build
   requires to fix the build process (although not sure why that is

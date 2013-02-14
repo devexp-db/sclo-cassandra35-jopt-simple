@@ -29,7 +29,7 @@
 #
 Name: jopt-simple
 Version: 3.3
-Release: 7%{?dist}
+Release: 8%{?dist}
 Summary: A Java command line parser
 License: MIT
 Group: Development/Libraries
@@ -90,6 +90,9 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.3-8
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
+
 * Wed Feb 06 2013 Java SIG <java-devel@lists.fedoraproject.org> - 3.3-7
 - Update for https://fedoraproject.org/wiki/Fedora_19_Maven_Rebuild
 - Replace maven BuildRequires with maven-local

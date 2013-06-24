@@ -28,30 +28,34 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 Name: jopt-simple
-Version: 3.3
-Release: 8%{?dist}
+Version: 4.5
+Release: 1%{?dist}
 Summary: A Java command line parser
 License: MIT
 Group: Development/Libraries
-URL: http://jopt-simple.sourceforge.net
-# https://github.com/pholser/jopt-simple/tarball/jopt-simple-3.3
-Source0: https://download.github.com/pholser-jopt-simple-jopt-simple-%{version}-0-g59a05aa.tar.gz
-Patch0: jopt-simple-buildfixes.patch
+URL: http://pholser.github.io/jopt-simple/
+Source0: https://github.com/pholser/jopt-simple/archive/jopt-simple-%{version}.tar.gz
 BuildArch: noarch
 BuildRequires: jpackage-utils
 BuildRequires: java-devel >= 1.5.0
-BuildRequires: maven-local maven-scm
-BuildRequires: maven-enforcer-plugin maven-dependency-plugin
+BuildRequires: maven-local
+BuildRequires: maven-clean-plugin
+BuildRequires: maven-dependency-plugin
+BuildRequires: maven-deploy-plugin
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-pmd-plugin
+BuildRequires: maven-release-plugin
+BuildRequires: ant
+BuildRequires: joda-time
+# Unit testing is disabled due to this missing dependency:
+#BuildRequires:  continuous-testing-toolkit
 Requires: java >= 0:1.5.0
 Requires: jpackage-utils
-# Unit testing is disabled due to missing dependencies.
-#BuildRequires:  joda-time
-#BuildRequires:  junit4
-#BuildRequires:  continuous-testing-toolkit
-#BuildRequires:  ant
 
 %description
-A Java library for parsing command line options.
+JOpt Simple is a Java library for parsing command line options, such as those
+you might pass to an invocation of javac.
 
 %package javadoc
 Summary: Javadoc for %{name}
@@ -62,8 +66,12 @@ Requires: jpackage-utils
 This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n pholser-jopt-simple-9d4f1b6
-%patch0 -p1 -b .buildfixes
+%setup -q -n jopt-simple-jopt-simple-%{version}
+
+%pom_xpath_remove "pom:build/pom:extensions"
+%pom_remove_dep org.infinitest:continuous-testing-toolkit
+%pom_remove_plugin org.pitest:pitest-maven
+%pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
 
 %build
 mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip=true
@@ -74,7 +82,7 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 install -m 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -90,6 +98,9 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Jun 24 2013 Mat Booth <fedora@matbooth.co.uk> - 4.5-1
+- Update to latest upstream, fixes rhbz #958111
+
 * Thu Feb 14 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.3-8
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_19_Mass_Rebuild
 

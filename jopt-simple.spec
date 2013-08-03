@@ -29,7 +29,7 @@
 #
 Name: jopt-simple
 Version: 4.5
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A Java command line parser
 License: MIT
 Group: Development/Libraries
@@ -98,6 +98,9 @@ cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.5-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Mon Jun 24 2013 Mat Booth <fedora@matbooth.co.uk> - 4.5-1
 - Update to latest upstream, fixes rhbz #958111
 

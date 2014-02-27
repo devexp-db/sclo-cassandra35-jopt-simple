@@ -29,10 +29,9 @@
 #
 Name: jopt-simple
 Version: 4.5
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: A Java command line parser
 License: MIT
-Group: Development/Libraries
 URL: http://pholser.github.io/jopt-simple/
 Source0: https://github.com/pholser/jopt-simple/archive/jopt-simple-%{version}.tar.gz
 BuildArch: noarch
@@ -50,8 +49,6 @@ BuildRequires: ant
 BuildRequires: joda-time
 # Unit testing is disabled due to this missing dependency:
 #BuildRequires:  continuous-testing-toolkit
-Requires: java >= 0:1.5.0
-Requires: jpackage-utils
 
 %description
 JOpt Simple is a Java library for parsing command line options, such as those
@@ -59,8 +56,6 @@ you might pass to an invocation of javac.
 
 %package javadoc
 Summary: Javadoc for %{name}
-Group: Documentation
-Requires: jpackage-utils
 
 %description javadoc
 This package contains the API documentation for %{name}.
@@ -74,30 +69,22 @@ This package contains the API documentation for %{name}.
 %pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
 
 %build
-mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip=true
+%mvn_build -f
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+%mvn_install
 
-mkdir -p $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-%add_maven_depmap
-
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%files
+%files -f .mfiles
 %doc LICENSE.txt
-%{_javadir}/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%dir %{_javadir}/%{name}
 
-%files javadoc
+%files javadoc -f .mfiles-javadoc
 %doc LICENSE.txt
-%{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 27 2014 Mat Booth <fedora@matbooth.co.uk> - 4.5-3
+- Update for latest guidelines rhbz #1068301
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.5-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 

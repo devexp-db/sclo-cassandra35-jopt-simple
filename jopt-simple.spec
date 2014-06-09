@@ -1,54 +1,15 @@
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
 Name: jopt-simple
-Version: 4.5
-Release: 4%{?dist}
+Version: 4.6
+Release: 1%{?dist}
 Summary: A Java command line parser
 License: MIT
 URL: http://pholser.github.io/jopt-simple/
 Source0: https://github.com/pholser/jopt-simple/archive/jopt-simple-%{version}.tar.gz
+
 BuildArch: noarch
-BuildRequires: jpackage-utils
-BuildRequires: java-devel >= 1.5.0
+
 BuildRequires: maven-local
-BuildRequires: maven-clean-plugin
-BuildRequires: maven-dependency-plugin
-BuildRequires: maven-deploy-plugin
-BuildRequires: maven-enforcer-plugin
-BuildRequires: maven-install-plugin
-BuildRequires: maven-pmd-plugin
-BuildRequires: maven-release-plugin
-BuildRequires: ant
 BuildRequires: joda-time
-# Unit testing is disabled due to this missing dependency:
-#BuildRequires:  continuous-testing-toolkit
 
 %description
 JOpt Simple is a Java library for parsing command line options, such as those
@@ -67,8 +28,10 @@ This package contains the API documentation for %{name}.
 %pom_remove_dep org.infinitest:continuous-testing-toolkit
 %pom_remove_plugin org.pitest:pitest-maven
 %pom_remove_plugin org.codehaus.mojo:cobertura-maven-plugin
+%pom_remove_plugin org.apache.maven.plugins:maven-pmd-plugin
 
 %build
+# Unit testing is disabled due to a missing dependency in Fedora of continuous-testing-toolkit
 %mvn_build -f
 
 %install
@@ -82,6 +45,10 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Mon Jun 09 2014 Mat Booth <mat.booth@redhat.com> - 4.6-1
+- Update to latest upstream release
+- Drop unnecessary BRs
+
 * Sun Jun 08 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.5-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 

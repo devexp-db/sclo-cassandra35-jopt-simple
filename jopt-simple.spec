@@ -1,18 +1,19 @@
-%{?scl:%scl_package high-scale-lib}
+%{?scl:%scl_package jopt-simple}
 %{!?scl:%global pkg_name %{name}}
 
 Name: %{?scl_prefix}jopt-simple
 Version: 4.6
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: A Java command line parser
 License: MIT
-URL: http://pholser.github.io/jopt-simple/
-Source0: https://github.com/pholser/jopt-simple/archive/jopt-simple-%{version}.tar.gz
+URL: http://pholser.github.io/%{pkg_name}/
+Source0: https://github.com/pholser/%{pkg_name}/archive/%{pkg_name}-%{version}.tar.gz
 
 BuildArch: noarch
 
 BuildRequires: %{?scl_mvn_prefix}maven-local
 BuildRequires: %{?scl_mvn_prefix}joda-time
+BuildRequires: %{?scl_mvn_prefix}mvn(org.sonatype.oss:oss-parent:pom:)
 
 %description
 JOpt Simple is a Java library for parsing command line options, such as those
@@ -26,7 +27,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %{?scl_enable}
-%setup -q -n jopt-simple-jopt-simple-%{version}
+%setup -q -n %{pkg_name}-%{pkg_name}-%{version}
 
 %pom_xpath_remove "pom:build/pom:extensions"
 %pom_remove_dep org.infinitest:continuous-testing-toolkit
@@ -53,5 +54,8 @@ This package contains the API documentation for %{name}.
 %doc LICENSE.txt
 
 %changelog
+* Wed Jul 27 2016 Tomas Repik <trepik@redhat.com> - 4.6-2
+- added dependency + minor fixes
+
 * Wed Jul 27 2016 Pavel Raiskup <praiskup@redhat.com> - 4.6-1
 - sclize
